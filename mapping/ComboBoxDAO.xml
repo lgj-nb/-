@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lgj.dao.ComboBoxDAO">
+
+ <!-- 自定义resultMap 负责人 -->
+  <resultMap type="com.lgj.vo.SelectOption" id="Employee">  	
+    <id column="EmployeeID" jdbcType="INTEGER" property="value" />
+    <result column="EmployeeName" jdbcType="VARCHAR" property="text" />
+  </resultMap>  
+ <!-- 自定义resultMap 仓库-->
+  <resultMap type="com.lgj.vo.SelectOption" id="Entrepot">  	
+    <id column="EntrepotID" jdbcType="INTEGER" property="value" />
+    <result column="EntrepotName" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+ <!-- 自定义resultMap 供应商-->
+  <resultMap type="com.lgj.vo.SelectOption" id="Provider">  	
+    <id column="ProviderID" jdbcType="INTEGER" property="value" />
+    <result column="ProviderName" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+    <!-- 自定义resultMap 供应商类别-->
+    <resultMap type="com.lgj.vo.SelectOption" id="Providertype">
+        <id column="ProviderTypeID" jdbcType="INTEGER" property="value" />
+        <result column="ProviderTypeName" jdbcType="VARCHAR" property="text" />
+    </resultMap>
+ <!-- 自定义resultMap 入库单号-->
+  <resultMap type="com.lgj.vo.SelectOption" id="EnterWarehou">  	
+    <id column="EnterEntrepotID" jdbcType="INTEGER" property="value" />
+    <result column="EnterEntrepotNum" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+  
+  
+  <!-- 查询负责人 下拉框 -->
+  <select id="selectEmployee" resultMap="Employee">
+	SELECT  EmployeeID,EmployeeName FROM pw_employee
+  </select>
+  
+  <!-- 查询仓库  下拉框 -->
+  <select id="selectEntrepot" resultMap="Entrepot">	
+	select EntrepotID,EntrepotName from sys_entrepot 
+  </select>
+  <!-- 查询供应商  下拉框 -->
+  <select id="selectProvider" resultMap="Provider">	
+	select ProviderID,ProviderName  from sys_provider
+  </select>  
+  <!-- 查询供应类别  下拉框 -->
+  <select id="selectProvidertype" resultMap="Providertype">
+	SELECT ProviderTypeID,ProviderTypeName FROM sys_providertype
+  </select>
+  <!-- 查询入库单号  下拉框 -->
+  <select id="selectEnterWarehou" resultMap="EnterWarehou">	
+	select EnterEntrepotID,EnterEntrepotNum from pw_enterentrepot
+  </select>
+  
+  
+</mapper>

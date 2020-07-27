@@ -1,0 +1,43 @@
+  
+ //初始化页面
+    private void initView() {  
+        //服务器路径
+        String employee = ServiceUrls.getComboBoxWebUrl("employee");       
+        //下拉框绑定    参数：utl       当前类.this       gson       id
+      ComboBoxUtils.comboBox(employee,purchaseActivity.this,gson,Spinner_jbr);
+    }
+
+/**
+ * 下拉框 工具类
+ */
+public class ComboBoxUtils {
+    public static void comboBox(String url, final Activity myActivity, final Gson gson, final Spinner spinner){
+        //发送请求
+        OkHttpTool.httpPost(url, null, new OkHttpTool.ResponseCallback() {
+            @Override
+            public void onResponse(final boolean isSuccess, final int responseCode, final String response, Exception exception) {
+                myActivity.runOnUiThread(new Runnable() {
+
+                    private List<SelectOption> list=new ArrayList<>();
+                    private List<SelectOption> list2=new ArrayList<>();
+
+                    @Override
+                    public void run() {
+                        //给Spinner绑定数据
+                        Type type = new TypeToken<List<SelectOption>>() { }.getType();
+                        list.add(new SelectOption(0,"<-请选择->"));
+                        list2 = gson.fromJson(response, type);
+                        list.addAll(list2);
+                        if (list != null) {
+                            //=======绑定 Spinner
+                            ArrayAdapter<SelectOption> arrayAdapter = new ArrayAdapter<>(myActivity, android.R.layout.simple_spinner_dropdown_item, list);
+                            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner.setAdapter(arrayAdapter);
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+}
